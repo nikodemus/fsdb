@@ -2,7 +2,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
-;;; CCL interface functions 
+;;; CCL interface functions
 ;;;
 
 (in-package :fsdb)
@@ -72,7 +72,7 @@
 
 (defun ensure-directory-pathname (path)
   (ccl::ensure-directory-pathname path))
-              
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;

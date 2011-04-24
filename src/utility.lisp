@@ -64,7 +64,7 @@
   (let ((len (length string)))
     (if (and (> len 0) (eql separator (aref string (1- len))))
         (subseq string 0 (1- len))
-        string)))      
+        string)))
 
 (defun implode (separator &rest strings)
   (declare (dynamic-extent strings))

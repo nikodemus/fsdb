@@ -59,7 +59,7 @@
   (if (read-write-lock-write-waiting-p lock)
       (write-unlock-rwlock lock)
       (read-unlock-rwlock lock)))
-              
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;

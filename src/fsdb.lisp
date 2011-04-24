@@ -31,7 +31,7 @@
   (:method ((db db) key)
     (declare (ignore key))
     (unimplemented-db-method 'db-lock)))
-  
+
 (defgeneric db-unlock (db lock)
   (:method ((db db) lock)
     (declare (ignore lock))
@@ -51,7 +51,7 @@
   (:method ((db db) &rest keys)
     (declare (ignore keys))
     (unimplemented-db-method 'db-dir-p)))
-  
+
 ;;;
 ;;; Implement the db protocol using the file system
 ;;;
@@ -174,7 +174,7 @@
     (with-fsdb-filename (db filename key)
       (let ((path (probe-file filename)))
         (and path (cl-fad:directory-pathname-p path))))))
-    
+
 ;;;
 ;;; Multiple readers, one writer for an fsdb dir.
 ;;; Best if the writer doesn't run very often, as the readers
@@ -332,7 +332,7 @@
     (setf value nil))
   (let ((cell (get-db-wrapper-cell db key more-keys :create-p t)))
     (setf (cdr cell) value)))
-      
+
 (defmethod db-contents ((db db-wrapper) &rest keys)
   (declare (dynamic-extent keys))
   (let ((cell-res (apply #'db-wrapper-contents db keys))
@@ -377,7 +377,7 @@
         (ignore-errors
           (db-unlock wrapped-db (cdr key.lock)))))
     cnt))
-    
+
 ;; db-wrapper locking. All locks held until commit
 (defmethod db-lock ((db db-wrapper) key)
   (unless (assoc key (db-wrapper-locks db) :test #'equal)
