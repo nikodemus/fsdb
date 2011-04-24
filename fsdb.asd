@@ -1,7 +1,8 @@
 ; -*- mode: lisp -*-
 (in-package #:cl-user)
 
-#-ccl (error "Doesn't yet work in other than Clozure Common Lisp (CCL)")
+#-(or sbcl ccl)
+(error "Currently FSDB supports only CCL and SBCL.")
 
 (asdf:defsystem :fsdb
   :description "A simple file sysem database"
@@ -17,6 +18,8 @@
      (:file "package")
      #+ccl
      (:file "ccl")
+     #+sbcl
+     (:file "sbcl")
      (:file "utility")
      (:file "read-write-lock")
      (:file "file-locks")

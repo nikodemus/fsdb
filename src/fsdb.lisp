@@ -161,9 +161,7 @@
   (let* ((key (if keys
                  (%append-db-keys (car keys) (append (cdr keys) '("*.*")))
                  "*.*"))
-         (dir (directory (db-filename db key)
-                        :directories t
-                        :all nil)))
+         (dir (cl-fad:list-directory (db-filename db key))))
     ;; DIRECTORY doesn't necessarily return sorted on FreeBSD
     (sort (mapcar 'file-namestring-or-last-directory dir) #'string-lessp)))
 
