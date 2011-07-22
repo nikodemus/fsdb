@@ -27,6 +27,7 @@
    #:fsdb
    #:db-put
    #:db-get
+   #:with-db-lock
    #:db-lock
    #:db-unlock
    #:db-contents
@@ -45,6 +46,32 @@
    #:commit-db-wrapper
    #:rollback-db-wrapper
    #:with-db-wrapper
+
+   ;; utility.lisp
+   #:make-equal-hash
+   #:*whitespace*
+   #:strcat
+   #:remove-trailing-separator
+   #:blankp
+   #:stringify
+   #:trim
+   #:file-get-contents
+   #:file-put-contents
+   #:dotcat
+   #:assocequal
+   #:str-replace
+   #:strstr
+   #:explode
+   #:implode
+   #:get-inited-hash
+   #:delq
+
+   ;; ccl.lisp & sbcl.lisp
+   #:ensure-directory-pathname
+   #:recursive-delete-directory
+   #:process-wait
+   #:process-run-function
+   #:current-process
    ))
 
 

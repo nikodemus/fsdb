@@ -159,7 +159,7 @@
 
 (defmethod db-contents ((db fsdb) &rest keys)
   (let* ((key (if keys
-                 (%append-db-keys (car keys) (append (cdr keys) '("*.*")))
+                 (%append-db-keys (car keys) (cdr keys))
                  "*.*"))
          (dir (cl-fad:list-directory (db-filename db key))))
     ;; DIRECTORY doesn't necessarily return sorted on FreeBSD
