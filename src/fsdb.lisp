@@ -56,13 +56,16 @@
 ;;; Implement the db protocol using the file system
 ;;;
 
-(defun make-fsdb (dir)
+(defun make-fsdb (dir &key (external-format :default))
   "Create an fsdb isstance for the given file system directory."
-  (make-instance 'fsdb :dir dir))
+  (make-instance 'fsdb :dir dir :external-format external-format))
 
 (defclass fsdb (db)
   ((dir :initarg :dir
-        :accessor fsdb-dir)))
+        :accessor fsdb-dir)
+   (external-format :initarg external-format
+                    :accessor fsdb-external-format
+                    :initform :default)))
 
 (defmethod print-object ((db fsdb) stream)
   (print-unreadable-object (db stream :type t)
@@ -122,7 +125,7 @@
   (declare (dynamic-extent more-keys))
   (let ((key (%append-db-keys key more-keys)))
     (with-fsdb-filename (db filename key)
-      (let ((res (file-get-contents filename)))
+      (let ((res (file-get-contents filename (fsdb-external-format db))))
         (and (not (equal "" res))
              res)))))
 
@@ -132,7 +135,7 @@
     (with-fsdb-filename (db filename key)
       (if (or (null value) (equal value ""))
           (when (probe-file filename) (delete-file filename))
-          (file-put-contents filename value)))))
+          (file-put-contents filename value (fsdb-external-format db))))))
 
 (defmethod db-lock ((db fsdb) key)
   (grab-file-lock (db-filename db key)))
