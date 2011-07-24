@@ -1,0 +1,45 @@
+FSDB is a simple file-based "database". It supports reads, writes, and
+directory listings of a file hierarchy, with thread-safe locking (when
+run from a single Lisp process with multiple threads). Based on the
+ideas of Patrick Chkoreff, which he has integrated into
+http://loom.cc/
+
+Currently works in Clozure Common Lisp (CCL) and SBCL.
+
+Thanks to Nikodemus Siivola for the SBCL port.
+
+There are quite a few exported symbols, but you can do a lot with just
+the following:
+
+make-fsdb (dir &key (external-format :default))
+Function
+-----
+Make an FSDB instance based at the given DIR, which should be a path
+to a filesystem directory. EXTERNAL-FORMAT will be used for all the
+file opens.
+
+db-get ((db fsdb) key &rest more-keys)
+Method
+-----
+Read the file at the offset KEY/MORE-KEYS... from DB's DIR. Return a
+string.
+
+(setf db-get) (value (db fsdb) key &rest more-keys)
+Method
+-----
+Write VALUE, which must be a string, to the file at the offset
+KEY/MORE-KEYS... from DB's DIR.
+
+db-contents ((db fsdb) &rest keys)
+Method
+-----
+Return a list of the names of all the files and directories at the
+offets KEYS... from DB's DIR. No paths will be in that list. Just
+strings naming the individual files and sub-directories. No indication
+is made of whether an element of the list is a file or a directory.
+
+db-dir-p ((db fsdb) &rest keys)
+Method
+-----
+Return true if there is a file or directory at path KEYS... from DB's
+DIR and it is a directory.
