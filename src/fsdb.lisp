@@ -63,7 +63,7 @@
 (defclass fsdb (db)
   ((dir :initarg :dir
         :accessor fsdb-dir)
-   (external-format :initarg external-format
+   (external-format :initarg :external-format
                     :accessor fsdb-external-format
                     :initform :default)))
 
