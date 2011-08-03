@@ -46,6 +46,7 @@
    #:commit-db-wrapper
    #:rollback-db-wrapper
    #:with-db-wrapper
+   #:copy-db-wrapper
 
    ;; utility.lisp
    #:make-equal-hash
