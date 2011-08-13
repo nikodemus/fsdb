@@ -36,7 +36,7 @@
    #:db-dir-p
    #:append-db-keys
    #:%append-db-keys
-   #:db-filname
+   #:db-filename
    #:with-fsdb-filename
    #:with-read-locked-fsdb
    #:with-write-locked-fsdb
