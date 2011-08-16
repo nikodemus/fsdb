@@ -104,18 +104,19 @@
       (funcall thunk filename key))))
 
 (defun %append-db-keys (key &optional more-keys)
-  (if (null more-keys)
-      key
-      (let* ((len (+ (length key)
-                     (reduce #'+ more-keys :key #'length)
-                     (length more-keys)))
-             (res (make-string len :element-type (array-element-type key)))
-             (i -1))
-        (dolist (str (cons key more-keys))
-          (unless (eql i -1) (setf (aref res (incf i)) #\/))
-          (dotimes (j (length str))
-            (setf (aref res (incf i)) (aref str j))))
-        res)))
+  (cond ((null more-keys) key)
+        (t (when (equal key "")
+             (setf key (pop more-keys)))
+           (let* ((len (+ (length key)
+                          (reduce #'+ more-keys :key #'length)
+                          (length more-keys)))
+                  (res (make-string len :element-type (array-element-type key)))
+                  (i -1))
+             (dolist (str (cons key more-keys))
+               (unless (eql i -1) (setf (aref res (incf i)) #\/))
+               (dotimes (j (length str))
+                 (setf (aref res (incf i)) (aref str j))))
+             res))))
 
 (defun append-db-keys (key &rest more-keys)
   (declare (dynamic-extent more-keys))
@@ -162,14 +163,19 @@
       (db-unlock db lock))))
 
 (defun file-namestring-or-last-directory (path)
-  (if (or (pathname-name path) (pathname-type path))
-      (file-namestring path)
-      (car (last (pathname-directory path)))))
+  (let ((name (pathname-name path))
+        (type (pathname-type path)))
+    (if (or name type)
+        ;; Don't use file-namestring here. It quotes names starting with "."
+        (if name
+            (if type (concatenate 'string name "." type) name)
+            (concatenate 'string "." type))
+        (car (last (pathname-directory path))))))
 
 (defmethod db-contents ((db fsdb) &rest keys)
   (let* ((key (if keys
                  (%append-db-keys (car keys) (cdr keys))
-                 "*.*"))
+                 ""))
          (dir (cl-fad:list-directory (db-filename db key))))
     ;; DIRECTORY doesn't necessarily return sorted on FreeBSD
     (sort (mapcar 'file-namestring-or-last-directory dir) #'string-lessp)))
