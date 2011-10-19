@@ -29,7 +29,8 @@
 (defparameter *whitespace* '(#\newline #\return #\tab #\space))
 
 (defun trim (string)
-  (string-left-trim *whitespace* (string-right-trim *whitespace* string)))
+  (and string
+       (string-left-trim *whitespace* (string-right-trim *whitespace* string))))
 
 (defun assocequal (item alist)
   (assoc item alist :test 'equal))

@@ -74,8 +74,9 @@
 (defmethod initialize-instance :after ((db fsdb) &rest ignore)
   (declare (ignore ignore))
   (let ((dir (ensure-directory-pathname (fsdb-dir db))))
-    (ignore-errors (create-directory dir))
-    (setq dir (remove-trailing-separator (namestring (truename (fsdb-dir db)))))
+    ;;(ignore-errors (create-directory dir))
+    ;;(setq dir (remove-trailing-separator (namestring (truename (fsdb-dir db)))))
+    (setq dir (remove-trailing-separator (namestring (fsdb-dir db))))
     (setf (fsdb-dir db) dir)))
 
 (defun normalize-key (key)
